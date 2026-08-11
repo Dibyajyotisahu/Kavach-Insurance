@@ -1,16 +1,56 @@
-# React + Vite
+# Kavach Insurance Landing Page
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A React + Vite landing page for Kavach, an affordable protection concept built for gig workers and students.
 
-Currently, two official plugins are available:
+## Project setup
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+```bash
+npm install
+```
 
-## React Compiler
+### Local development
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+npm run dev
+```
 
-## Expanding the Oxlint configuration
+Open the local server URL shown by Vite after startup.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+### Build for production
+
+```bash
+npm run build
+```
+
+### Lint
+
+```bash
+npm run lint
+```
+
+## GitHub Actions
+
+This repository includes CI and GitHub Pages deployment workflows:
+
+- `.github/workflows/ci.yml` — installs dependencies, runs lint, and builds on `push` and `pull_request` to `main`
+- `.github/workflows/pages.yml` — builds the app and deploys the `dist/` output to GitHub Pages on every push to `main`
+
+## Deployment
+
+The app is configured to deploy automatically to GitHub Pages using the workflow in `.github/workflows/pages.yml`.
+
+Once the workflow runs successfully, the site should be available via GitHub Pages for this repository.
+
+## Repository structure
+
+- `index.html` — Vite entry template
+- `src/` — React source files
+- `public/` — static assets
+- `package.json` — dependencies and scripts
+- `tailwind.config.js` — Tailwind CSS config
+- `vite.config.js` — Vite config
+
+## Notes
+
+- `dist/` is ignored by Git because it is generated at build time.
+- The deployment workflow uses `npm ci` and `npm run build` so the published output matches the production build.
