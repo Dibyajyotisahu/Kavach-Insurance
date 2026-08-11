@@ -12,7 +12,7 @@ import {
 /* ---------------------------------------------------------------
    TOKENS
    ink #120D08 · paper #FFFFFF · signal(route-green) #FF7A00
-   amber(helmet) #0EA5A0 · muted(slate) #4A3B2E · hairline #E4DACB
+   amber(helmarray.map(()et) #0EA5A0 · muted(slate) #4A3B2E · hairline #E4DACB
 ----------------------------------------------------------------*/
 
 const fmtINR = (n) => "₹" + Math.round(n).toLocaleString("en-IN");
@@ -105,6 +105,15 @@ function useTilt(strength = 6) {
     el.style.transform = "perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0)";
   }, []);
   return { ref, onMouseMove: onMove, onMouseLeave: onLeave };
+}
+
+function TiltCard({ children, className = "", strength = 6, ...props }) {
+  const tilt = useTilt(strength);
+  return (
+    <div {...tilt} className={className} {...props}>
+      {children}
+    </div>
+  );
 }
 
 function useScrollSpy(ids) {
@@ -428,20 +437,20 @@ function Problem() {
         <p className="text-[#4A3B2E] max-w-xl mb-14 leading-relaxed">For millions of gig workers, one unexpected expense can become a financial crisis.</p>
       </Reveal>
       <div className="grid md:grid-cols-3 gap-5">
-        {cards.map((c, i) => {
-          const tilt = useTilt(5);
-          return (
-            <Reveal key={i} delay={i * 100}>
-              <div {...tilt} className="rounded-3xl bg-white border border-[#E4DACB] p-7 hover:shadow-[0_16px_40px_rgba(11,28,44,0.10)] transition-shadow duration-300 [transform-style:preserve-3d]">
-                <div className="h-11 w-11 rounded-xl bg-[#0EA5A0]/10 flex items-center justify-center mb-5">
-                  <c.icon className="h-5 w-5 text-[#0EA5A0]" />
-                </div>
-                <h3 className="font-semibold text-[#120D08] mb-2">{c.title}</h3>
-                <p className="text-sm text-[#4A3B2E] leading-relaxed">{c.body}</p>
+        {cards.map((c, i) => (
+          <Reveal key={i} delay={i * 100}>
+            <TiltCard
+              strength={5}
+              className="rounded-3xl bg-white border border-[#E4DACB] p-7 hover:shadow-[0_16px_40px_rgba(11,28,44,0.10)] transition-shadow duration-300 [transform-style:preserve-3d]"
+            >
+              <div className="h-11 w-11 rounded-xl bg-[#0EA5A0]/10 flex items-center justify-center mb-5">
+                <c.icon className="h-5 w-5 text-[#0EA5A0]" />
               </div>
-            </Reveal>
-          );
-        })}
+              <h3 className="font-semibold text-[#120D08] mb-2">{c.title}</h3>
+              <p className="text-sm text-[#4A3B2E] leading-relaxed">{c.body}</p>
+            </TiltCard>
+          </Reveal>
+        ))}
       </div>
       <Reveal delay={200}>
         <div className="mt-12 rounded-3xl bg-[#120D08] px-8 py-10 text-center">
@@ -510,11 +519,10 @@ function Solution() {
    PLANS
 ----------------------------------------------------------------*/
 function PlanCard({ p, i }) {
-  const tilt = useTilt(4);
   return (
     <Reveal delay={i * 110} y={30}>
-      <div
-        {...tilt}
+      <TiltCard
+        strength={4}
         className={`relative rounded-3xl bg-white border-2 ${p.tone} p-7 flex flex-col h-full [transform-style:preserve-3d] transition-shadow duration-300 hover:shadow-[0_20px_50px_rgba(11,28,44,0.12)] ${
           p.featured ? "md:-translate-y-3 shadow-[0_16px_40px_rgba(11,28,44,0.10)] plan-glow" : ""
         }`}
@@ -548,7 +556,7 @@ function PlanCard({ p, i }) {
         >
           {p.cta}
         </a>
-      </div>
+      </TiltCard>
     </Reveal>
   );
 }
@@ -794,21 +802,21 @@ function ClaimableEvents() {
         <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-[#120D08] max-w-2xl mb-14">What can you claim?</h2>
       </Reveal>
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-        {items.map((it, i) => {
-          const tilt = useTilt(5);
-          return (
-            <Reveal key={i} delay={(i % 3) * 90}>
-              <div {...tilt} className="rounded-3xl border border-[#E4DACB] p-6 hover:border-[#FF7A00]/40 hover:shadow-[0_16px_40px_rgba(11,28,44,0.10)] transition-shadow duration-300 [transform-style:preserve-3d] h-full">
-                <div className="h-10 w-10 rounded-xl bg-[#120D08] flex items-center justify-center mb-4">
-                  <it.icon className="h-5 w-5 text-[#FF7A00]" />
-                </div>
-                <h3 className="font-semibold text-[#120D08] mb-1.5">{it.title}</h3>
-                <p className="text-sm text-[#4A3B2E] mb-3 leading-relaxed">{it.body}</p>
-                <p className="text-[10px] uppercase tracking-wide text-[#0EA5A0] font-mono">Subject to policy terms &amp; eligibility</p>
+        {items.map((it, i) => (
+          <Reveal key={i} delay={(i % 3) * 90}>
+            <TiltCard
+              strength={5}
+              className="rounded-3xl border border-[#E4DACB] p-6 hover:border-[#FF7A00]/40 hover:shadow-[0_16px_40px_rgba(11,28,44,0.10)] transition-shadow duration-300 [transform-style:preserve-3d] h-full"
+            >
+              <div className="h-10 w-10 rounded-xl bg-[#120D08] flex items-center justify-center mb-4">
+                <it.icon className="h-5 w-5 text-[#FF7A00]" />
               </div>
-            </Reveal>
-          );
-        })}
+              <h3 className="font-semibold text-[#120D08] mb-1.5">{it.title}</h3>
+              <p className="text-sm text-[#4A3B2E] mb-3 leading-relaxed">{it.body}</p>
+              <p className="text-[10px] uppercase tracking-wide text-[#0EA5A0] font-mono">Subject to policy terms &amp; eligibility</p>
+            </TiltCard>
+          </Reveal>
+        ))}
       </div>
     </SectionWrap>
   );
